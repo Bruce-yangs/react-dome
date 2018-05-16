@@ -10,7 +10,8 @@ import registerServiceWorker from './registerServiceWorker';
         constructor(){
             super();
             this.state = {
-                msg:'well'
+                msg:'well',
+                show:false
             }
         }
         handle() {
@@ -24,11 +25,25 @@ import registerServiceWorker from './registerServiceWorker';
                 msg: event.target.value
             })
         }
+        show() {
+            this.setState({
+                show: !this.state.show
+            })
+        }
         render() {
+            let persons = null;
+            if(this.state.show) {
+                persons = (
+                      <div>
+                          <Preson  msg={this.state.msg} changed={this.changeName.bind(this)}></Preson>
+                          <Preson  msg='哈哈哈' changed={this.changeName.bind(this)}>知道现在努力还不晚</Preson>
+                      </div>
+                )
+            }
             return (
                 <div>
-                    <Preson msg={this.state.msg} changed={this.changeName.bind(this)}></Preson>
-                    <Preson msg='哈哈哈' changed={this.changeName.bind(this)}>知道现在努力还不晚</Preson>
+                    <button onClick={this.show.bind(this)}>Button show</button>
+                    {persons}
                     <button onClick={this.handle.bind(this)}>changeText</button>
                     <div className="box">{this.state.msg}</div>
                     <Clock />
