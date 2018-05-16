@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Preson from './Preson/Preson';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
+
     /*点击更换显示文案*/
     class Text extends React.Component {
         constructor(){
@@ -16,9 +18,17 @@ import registerServiceWorker from './registerServiceWorker';
                 msg:this.state.msg ==='well'?'nice':'well'
             })
         }
+        //双向绑定，自己修改input值 父级同时更改
+        changeName(event) {
+            this.setState({
+                msg: event.target.value
+            })
+        }
         render() {
             return (
                 <div>
+                    <Preson msg={this.state.msg} changed={this.changeName.bind(this)}></Preson>
+                    <Preson msg='哈哈哈' changed={this.changeName.bind(this)}>知道现在努力还不晚</Preson>
                     <button onClick={this.handle.bind(this)}>changeText</button>
                     <div className="box">{this.state.msg}</div>
                     <Clock />
@@ -246,6 +256,7 @@ import registerServiceWorker from './registerServiceWorker';
             )
         }
     }
+
     class Child extends React.Component{
         constructor() {
             super();
@@ -258,6 +269,7 @@ import registerServiceWorker from './registerServiceWorker';
             )
         }
     }
+
     /*父子通信--子传父*/
     class Parents extends React.Component{
         constructor() {
@@ -281,6 +293,7 @@ import registerServiceWorker from './registerServiceWorker';
             )
         }
     }
+
     class Childs extends React.Component{
         constructor() {
             super();
@@ -288,11 +301,15 @@ import registerServiceWorker from './registerServiceWorker';
                 msg: 'this is form to child '
             }
         }
-        handleClick() {
-            this.setState({
-                msg: this.state.msg.split('').reverse().join('')
-            });
+        componentDidMount() {
             this.props.fnTrans(this.state.msg);
+        }
+        handleClick() {
+            let str = this.state.msg.split('').reverse().join('');
+            this.setState({
+                msg: str
+            });
+            this.props.fnTrans(str);
         }
         render() {
             return(
