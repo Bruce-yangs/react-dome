@@ -64,8 +64,22 @@ import registerServiceWorker from './registerServiceWorker';
 
                 )
             }
+            //此处是动态修改样式
+            let classes = [];   //['red','bold'].join(' ') size
+            let len = this.state.arr.length;
+            if(len === 1) {
+                classes.push('red');
+            }else if(len === 2) {
+                classes.push('size');
+            }else if(len === 3) {
+                classes.push('bold');
+            }else if(len === 4) {
+                classes.push('bg');
+                classes.push('br');
+            }
             return (
                 <div>
+                    <p className={classes.join(' ')}>Hello World</p>
                     <button onClick={this.show.bind(this)}>Button show</button>
                     {persons}
                     <button onClick={this.handle.bind(this)}>changeText</button>

@@ -35,3 +35,18 @@ body {
   padding: 16px;
   text-align: center;
 }
+.red {
+  color: red;
+}
+.size {
+  font-size:100px;
+}
+.bold {
+  font-weight: 700;
+}
+.bg {
+  background: salmon;
+}
+.br {
+  border-radius:30px ;
+}
