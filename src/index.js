@@ -11,7 +11,8 @@ import registerServiceWorker from './registerServiceWorker';
             super();
             this.state = {
                 msg:'well',
-                show:false
+                show:false,
+                arr:  [{id:1,name: "ww", age: 221}, {id:2,name: "zz", age: 25}, {id:3,name: "tt", age: 2}, {id:4,name: "gg", age: 12}, {id:5,name: "ss", age: 33}]
             }
         }
         handle() {
@@ -20,9 +21,14 @@ import registerServiceWorker from './registerServiceWorker';
             })
         }
         //双向绑定，自己修改input值 父级同时更改
-        changeName(event) {
+        changeName(event,id) {
+            let persons = [...this.state.arr];
+            const PERSONINDEX = persons.findIndex(item =>{
+                    return item.id === id;
+                });
+            persons[PERSONINDEX].name = event.target.value;
             this.setState({
-                msg: event.target.value
+                arr: persons
             })
         }
         show() {
@@ -30,14 +36,32 @@ import registerServiceWorker from './registerServiceWorker';
                 show: !this.state.show
             })
         }
+        //删除对应的 数据
+        delete(index) {
+            let data = [...this.state.arr];
+            data.splice(index,1);
+            this.setState({
+                arr: data
+            })
+        }
         render() {
+            //渲染 数据
             let persons = null;
             if(this.state.show) {
                 persons = (
                       <div>
-                          <Preson  msg={this.state.msg} changed={this.changeName.bind(this)}></Preson>
-                          <Preson  msg='哈哈哈' changed={this.changeName.bind(this)}>知道现在努力还不晚</Preson>
+                        {/* <Preson  msg={this.state.msg} changed={this.changeName.bind(this)}></Preson>
+                          <Preson  msg='哈哈哈' changed={this.changeName.bind(this)}>知道现在努力还不晚</Preson>*/}
+                          {
+                              this.state.arr.map((item,index) => {
+                                  return <Preson  msg={item.name}
+                                                  key={item.id}
+                                                  myclick={() => this.delete(index)}
+                                                  changed={(event) =>this.changeName(event,item.id)} />
+                              })
+                          }
                       </div>
+
                 )
             }
             return (
