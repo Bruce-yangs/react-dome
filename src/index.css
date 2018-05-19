@@ -46,7 +46,19 @@ body {
 }
 .bg {
   background: salmon;
+  display:flex;
+}
+.bg li{
+  flex: 1;
+  line-height: 40px;
+  list-style: none;
+}
+.bg li a{
+  color: #fff;
 }
 .br {
   border-radius:30px ;
+}
+.bg li .active{
+  color: yellow;
 }

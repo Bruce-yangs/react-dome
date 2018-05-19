@@ -1,9 +1,12 @@
-import React from 'react';
+import React,{Component} from 'react';
 import ReactDOM from 'react-dom';
-import Preson from './Preson/Preson';
+import Preson from './components/Preson/Preson';
 import './index.css';
-import App from './App';
 import registerServiceWorker from './registerServiceWorker';
+import { HashRouter,
+    Switch,
+    Route,
+    Link ,NavLink} from 'react-router-dom'
 
     /*点击更换显示文案*/
     class Text extends React.Component {
@@ -392,9 +395,13 @@ import registerServiceWorker from './registerServiceWorker';
             ajax.onload = function () {
                 if(ajax.status === 200) {
                     let json = JSON.parse(ajax.responseText)
-                    this.setState({
-                        data: json.data
-                    })
+                    if(json.status.code !== -1) {
+                        this.setState({
+                            data: json.data
+                        })
+                    }else {
+                        alert(json.status.message)
+                    }
                     console.log(typeof json)
                     console.log(json.data)
                 }
@@ -405,11 +412,11 @@ import registerServiceWorker from './registerServiceWorker';
                 <div>
                     <p style={{display:this.state.data.length>0?'none':'block'}}>Loading...</p>
                     <ul>
-                       {/* {
+                        {
                             this.state.data.map((item,index) => {
                                 return  <li key={index}>{index+1}--{item.content}</li>
                             })
-                        }*/}
+                        }
                     </ul>
                 </div>
             )
@@ -417,5 +424,98 @@ import registerServiceWorker from './registerServiceWorker';
 
     }
 
-    ReactDOM.render(<Text />, document.getElementById('root'));
+    /*router路由*/
+    class App extends Component{
+        constructor() {
+            super();
+        }
+        render() {
+            return(
+                <div>
+                    <h1>Welcome to react-router 练习</h1>
+                    <ul className="bg">{/*activeStyle={{color: 'red'}}*/}
+                        <li><NavLink to='/' exact activeClassName="active">Home</NavLink></li>
+                        <li><NavLink to='/Parents' >MapList</NavLink> </li>
+                        <li><NavLink to='/SyncInput' >SyncInput</NavLink></li>
+                        <li><NavLink to='/roster' >Roster</NavLink></li>
+                    </ul>
+                    {/*此区域是 当点击选项卡切换内容  component={SyncInput} */ }
+                    <div>
+                        <Switch>
+                            {/*Route 中添加一个 exact 的 prop，来确保只有完全匹配的时候才会渲染*/}
+                            <Route exact path='/' component={Clock}/>
+                            <Route path='/Parents' component={Parents}/>
+                            <Route path='/SyncInput' component={SyncInput}/>
+                            <Route path='/roster' component={Roster}/>
+                        </Switch>
+                    </div>
+                </div>
+            )
+        }
+    }
+
+    const PlayerAPI = {
+        players: [
+            { number: 1, name: "Ben Blocker", position: "G" },
+            { number: 2, name: "Dave Defender", position: "D" },
+            { number: 3, name: "Sam Sweeper", position: "D" },
+            { number: 4, name: "Matt Midfielder", position: "M" },
+            { number: 5, name: "William Winger", position: "M" },
+            { number: 6, name: "Fillipe Forward", position: "F" }
+        ],
+        all: function() { return this.players},
+        get: function(id) {
+            const isPlayer = p => p.number === id
+            console.log(this.players.find(isPlayer))
+            return this.players.find(isPlayer)
+        }
+    }
+    const FullRoster = () => (
+        <div>
+            <ul>
+                {
+                    PlayerAPI.all().map(p => (
+                        <li key={p.number}>
+                            <Link to={`/roster/${p.number}`}>{p.name}</Link>
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+    )
+    const Player = (props) => {
+        const player = PlayerAPI.get(
+            parseInt(props.match.params.number, 10)
+        )
+        if (!player) {
+            return <div>Sorry, but the player was not found</div>
+        }
+        return (
+            <div>
+                <h1>{player.name} (#{player.number})</h1>
+                <h2>Position: {player.position}</h2>
+                <Link to='/roster'>Back</Link>
+            </div>
+        )
+    }
+
+    const Roster = () => (
+        <Switch>
+            <Route exact path='/roster' component={FullRoster}/>
+            <Route path='/roster/:number' component={Player}/>
+        </Switch>
+    )
+
+
+    ReactDOM.render(
+        <HashRouter>
+            <App />
+        </HashRouter>
+        , document.getElementById('root'));
     registerServiceWorker();
+
+    //此处是所有练习 组件都在Text中
+/*ReactDOM.render(
+        <Text />
+    , document.getElementById('root'));
+registerServiceWorker();*/
