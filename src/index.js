@@ -1,11 +1,13 @@
 import React,{Component} from 'react';
 import ReactDOM from 'react-dom';
 import Preson from './components/Preson/Preson';
+import Error from './components/error/error';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
-import { HashRouter,
+import { BrowserRouter as Router,
     Switch,
     Route,
+    Redirect,
     Link ,NavLink} from 'react-router-dom'
 
     /*点击更换显示文案*/
@@ -434,19 +436,24 @@ import { HashRouter,
                 <div>
                     <h1>Welcome to react-router 练习</h1>
                     <ul className="bg">{/*activeStyle={{color: 'red'}}*/}
-                        <li><NavLink to='/' exact activeClassName="active">Home</NavLink></li>
+                        <li><NavLink to='/' exact >Home</NavLink></li>
                         <li><NavLink to='/Parents' >MapList</NavLink> </li>
                         <li><NavLink to='/SyncInput' >SyncInput</NavLink></li>
                         <li><NavLink to='/roster' >Roster</NavLink></li>
+                        <li><NavLink to='/Redirect' >Redirect</NavLink></li>
                     </ul>
                     {/*此区域是 当点击选项卡切换内容  component={SyncInput} */ }
                     <div>
+                        {/*Switch 路由开关 当没找到页面 跳转404页面*/}
                         <Switch>
                             {/*Route 中添加一个 exact 的 prop，来确保只有完全匹配的时候才会渲染*/}
                             <Route exact path='/' component={Clock}/>
                             <Route path='/Parents' component={Parents}/>
                             <Route path='/SyncInput' component={SyncInput}/>
                             <Route path='/roster' component={Roster}/>
+                            {/*Redirect 当有的页面公用时跳转 from从什么路由 to 到什么路由*/}
+                            <Redirect from="/Redirect" to="/SyncInput" />
+                            <Route component={Error}/>
                         </Switch>
                     </div>
                 </div>
@@ -508,9 +515,10 @@ import { HashRouter,
 
 
     ReactDOM.render(
-        <HashRouter>
+        /*basename的作用是个我们增加一级导航目录  移动端一般用#哈希模式 HashRouter*/
+        <Router basename="demo">
             <App />
-        </HashRouter>
+        </Router>
         , document.getElementById('root'));
     registerServiceWorker();
 

@@ -59,6 +59,7 @@ body {
 .br {
   border-radius:30px ;
 }
-.bg li .active{
-  color: yellow;
+.bg li a.active{
+  display: inline-block;
+  background: slateblue;
 }
