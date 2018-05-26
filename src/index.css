@@ -63,3 +63,11 @@ body {
   display: inline-block;
   background: slateblue;
 }
+
+.text {
+  text-decoration:line-through;
+  color: #ccc;
+}
+.add-btn {
+  margin-left: 10px;
+}
