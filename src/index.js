@@ -362,11 +362,11 @@ class Form extends React.Component {
     render() {
         /*表单默认值书写 defaultValue="aaa"  defaultChecked*/
         return (
-            <div>
+            <React.Fragment>
                 <input type="text" placeholder="hahaha"/>
                 <input type="checkbox" defaultChecked/>
 
-            </div>
+            </React.Fragment>
         )
     }
 }
@@ -388,11 +388,11 @@ class Parent extends React.Component {
 
     render() {
         return (
-            <div>
+            <React.Fragment>
                 <div>---------------父传子--------------</div>
                 <p onClick={this.changeMsg.bind(this)}>我是父级--->{this.state.msg}</p>
                 <Child m={this.state.msg}/>
-            </div>
+            </React.Fragment>
         )
     }
 }
@@ -404,9 +404,9 @@ class Child extends React.Component {
 
     render() {
         return (
-            <div>
+            <React.Fragment>
                 <p>我是子级--->{this.props.m}</p>
-            </div>
+            </React.Fragment>
         )
     }
 }
@@ -428,11 +428,11 @@ class Parents extends React.Component {
 
     render() {
         return (
-            <div>
+            <React.Fragment>
                 <div>---------------以下子传父--------------</div>
                 <p >我是父级--->{this.state.msg || '暂无数据'}</p>
                 <Childs fnTrans={this.getMsg.bind(this)}/>
-            </div>
+            </React.Fragment>
         )
     }
 }
@@ -459,9 +459,9 @@ class Childs extends React.Component {
 
     render() {
         return (
-            <div>
+            <React.Fragment>
                 <p onClick={this.handleClick.bind(this)}>我是子级--->{this.state.msg}</p>
-            </div>
+            </React.Fragment>
         )
     }
 }
@@ -502,7 +502,7 @@ class MapList extends React.Component {
 
     render() {
         return (
-            <div>
+            <React.Fragment>
                 <p style={{display: this.state.data.length > 0 ? 'none' : 'block'}}>Loading...</p>
                 <ul>
                     {
@@ -511,7 +511,7 @@ class MapList extends React.Component {
                         })
                     }
                 </ul>
-            </div>
+            </React.Fragment>
         )
     }
 
@@ -525,7 +525,7 @@ class App extends Component {
 
     render() {
         return (
-            <div>
+            <React.Fragment>
                 <h1>Welcome to react-router 练习</h1>
                 <ul className="bg">{/*activeStyle={{color: 'red'}}*/}
                     <li><NavLink to='/' exact>Home</NavLink></li>
@@ -550,7 +550,7 @@ class App extends Component {
                         <Route component={Error}/>
                     </Switch>
                 </div>
-            </div>
+            </React.Fragment>
         )
     }
 }
