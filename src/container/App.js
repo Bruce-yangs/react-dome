@@ -1,6 +1,22 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 /*import logo from '../logo.svg';
 import './App.css';*/
+
+/*const mapStatetoProps = (state)=>{
+    return {num:state}
+}
+const actionCreators = {}*/
+
+/*connect装饰器*/
+
+// App = connect(mapStatetoProps,actionCreators)(App)
+// @connect(
+    //要state什么属性放到props里
+// mapStatetoProps,
+    //要什么方法放到props里会自动dispatch
+// actionCreators)
 
 /*class App extends Component {
   render() {
@@ -17,6 +33,7 @@ import './App.css';*/
     );
   }
 }*/
+
 
 
 

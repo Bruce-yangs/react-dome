@@ -11,6 +11,15 @@ import {
     Redirect,
     Link, NavLink
 } from 'react-router-dom'
+import {Button, List} from 'antd-mobile';
+import {createStore , applyMiddleware} from 'redux';
+import thunk from 'redux-thunk';
+const store = createStore(applyMiddleware(thunk));
+
+const Item = List.Item;
+
+
+
 
 /*点击更换显示文案*/
 class Text extends React.Component {
@@ -145,7 +154,7 @@ class Clock extends React.Component {
 
     render() {
         return (
-            <h3>{this.state.time}</h3>
+            <h3>{this.state.time} <Button type="primary">da</Button></h3>
         )
     }
 
@@ -203,7 +212,7 @@ class SyncInput extends React.Component {
     add() {
         if (this.state.text) {
             let arr = this.state.arr;
-            arr.push( {
+            arr.push({
                 val: this.state.text,
                 checked: false
             });
@@ -214,20 +223,20 @@ class SyncInput extends React.Component {
                 arr: this.state.arr
             });
             this.refs.inputV.value = '';
-           /* console.log(this.state.arr)
-            console.log(arr)*/
+            /* console.log(this.state.arr)
+             console.log(arr)*/
         }
 
     }
 
-    check(e,i) {
-        console.log(e.target.checked+'---'+i)
-            let arr = this.state.arr;
-            arr[i].checked = !arr[i].checked;
-            // arr.splice(i,1);
-            this.setState({
-                arr: arr
-            })
+    check(e, i) {
+        console.log(e.target.checked + '---' + i)
+        let arr = this.state.arr;
+        arr[i].checked = !arr[i].checked;
+        // arr.splice(i,1);
+        this.setState({
+            arr: arr
+        })
     }
 
     // className={classes.join(' ')}
@@ -244,11 +253,13 @@ class SyncInput extends React.Component {
                 <h3>{this.state.text}</h3>
                 <ul>
                     {
-                        this.state.arr.map((item,index) => {
-                           return <li style={{display:item.val!=''?'block':'none'}} key={index} className={item.checked ? 'text' : ''}> {item.val}
+                        this.state.arr.map((item, index) => {
+                            return <li style={{display: item.val != '' ? 'block' : 'none'}} key={index}
+                                       className={item.checked ? 'text' : ''}> {item.val}
 
-                           <input type="checkbox"  checked={item.checked} onChange={(event) =>this.check(event,index)}/>
-                           </li>
+                                <input type="checkbox" checked={item.checked}
+                                       onChange={(event) => this.check(event, index)}/>
+                            </li>
                         })
                     }
                 </ul>
@@ -504,13 +515,13 @@ class MapList extends React.Component {
         return (
             <React.Fragment>
                 <p style={{display: this.state.data.length > 0 ? 'none' : 'block'}}>Loading...</p>
-                <ul>
+                <List  renderHeader={() => '幽默段子'} renderFooter={() => '幽默段子结尾'} >
                     {
                         this.state.data.map((item, index) => {
-                            return <li key={index}>{index + 1}--{item.content}</li>
+                            return <Item platform="android"  onClick={() => {}} arrow="down" key={index}>{index + 1}--{item.content}</Item>
                         })
                     }
-                </ul>
+                </List>
             </React.Fragment>
         )
     }
