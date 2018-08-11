@@ -22,7 +22,7 @@ class AuthRoute extends Component {
                     } else {
                         this.props.history.push('/login')
                     }
-                    console.log(res.data)
+                    // console.log(res.data)
                 }
             })
     }

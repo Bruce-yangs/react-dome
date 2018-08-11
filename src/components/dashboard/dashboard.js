@@ -20,34 +20,12 @@ import {List, InputItem, WhiteSpace, WingBlank, Button, NavBar, TextareaItem} fr
     return <h2>Genius</h2>
 }*/
 function Msg() {
-    return <h2>Msg</h2>
+    return <h2>Msg12321</h2>
 }
-/*function User() {
-    return <h2>Me</h2>
-}*/
+
+
+
 class Dashboard extends React.Component {
-    /*constructor() {
-        super();
-        this.state = {
-            title: '',//招聘职位
-            company: '',//公司
-            money: '',//薪资
-            desc: '',//描述
-            avatar: ''//头像
-        }
-    }*/
-
-    //输入账号密码
-    handleChange(key, val) {
-        this.setState({
-            [key]: val
-        })
-    }
-
-
-
-
-
 
 
     render() {

@@ -15,7 +15,7 @@ class User extends Component {
         alert('退出', '确定退出吗?', [
             { text: '取消', onPress: () =>'', style: 'default' },
             { text: '确定', onPress: () => {
-                // browserCookie.erase('userId');
+                browserCookie.erase('userId');
                 // window.location.href = window.location.href; /*不太优雅*/
                 this.props.logoutSubmit();
             } },

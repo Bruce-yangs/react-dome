@@ -23,7 +23,12 @@ const models = {
         'money': {'type': String}
     },
     chat: {
-        // 'user':
+        'chatId': {'type': String, require: true},//对应聊天的id
+        'from': {'type': String, require: true},//从谁到谁
+        'to': {'type': String, require: true},// read 对 to字段 才有效
+        'content': {'type': String, require: true, default: ''},//聊天内容
+        'create_time': {'type': Number, default: new Date().getTime()},//聊天时间 排序
+        'read': {'type': Boolean, default: false}//是否已读
     }
 }
 

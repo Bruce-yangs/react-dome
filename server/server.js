@@ -2,7 +2,34 @@ const express = require('express');
 const bodyParser = require('body-parser');//引入两个中间件
 const cookieParser = require('cookie-parser');
 const userRouter = require('./user');
+
+const model = require('./model');//引入model
+// const User = model.getModel('user');//要查询的字段 用户信息
+const Chat = model.getModel('chat');//要查询的字段 聊天记录
+
 const app = express();
+
+const server = require('http').Server(app);//配合socket
+const io = require('socket.io')(server);
+
+io.on('connection',function (socket) {//此处的socket 是当前的请求
+    // console.log('user login')
+    //接受客户端发送信息
+    socket.on('sendMsg',function (data) {
+        // console.log(data)
+         /*io.emit('recvMsg',msg)*/
+        const {from,to,msg} = data;
+        //chatId 将2个用户的id合并为一个 每一个聊天有对应的id 方便查找
+        const chatId = [from,to].sort().join('_');
+        //创建
+        Chat.create({chatId,from,to,content:msg},function (err,doc) {
+            io.emit('recvMsg',Object.assign({},doc._doc))
+        })
+    })
+})
+
+
+
 
 app.use(bodyParser.json())//可以接受post参数
 app.use(cookieParser())
@@ -76,7 +103,6 @@ app.get('/data', function (req, res) {
 
 
 
-
-app.listen(9093, function () {
+server.listen(9093, function () {
     console.log('Node app start at port 9093')
 });

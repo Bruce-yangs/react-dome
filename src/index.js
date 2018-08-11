@@ -19,6 +19,8 @@ import BossInfo from 'con/bossInfo/bossInfo';
 import Geniusinfo from 'con/geniusinfo/geniusinfo';
 import AuthRoute from 'com/authRoute/authRoute';
 import Dashboard from 'com/dashboard/dashboard';
+import Chat from 'com/chat/chat';
+import 'css/index.css'
 
 import {Button, List} from 'antd-mobile';
 
@@ -42,6 +44,7 @@ ReactDOM.render(
                     <Route path="/register" component={Register}></Route>
                     <Route path="/bossinfo" component={BossInfo}></Route>
                     <Route path="/geniusinfo" component={Geniusinfo}></Route>
+                    <Route path="/chat/:user" component={Chat}></Route>
                     <Route component={Dashboard}></Route>
                 </Switch>
             </div>

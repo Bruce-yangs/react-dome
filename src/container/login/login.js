@@ -6,6 +6,27 @@ import {Redirect} from 'react-router-dom'
 
 import {List, InputItem, WhiteSpace, WingBlank, Button} from 'antd-mobile'
 
+
+
+/*function WrapperHellow(Comp) {
+    class WrapComp extends React.Component{
+        render() {
+            return(
+                <div>
+                    <p>高阶组件</p>
+                    <Comp >{this.props}</Comp>
+                </div>
+            )
+        }
+    }
+    return WrapComp
+}
+@WrapperHellow()
+class Hello extends React.Component{
+    render(){
+        return <h2>hellow imooc I lover react</h2>
+    }
+}*/
 class Login extends React.Component {
     constructor() {
         super();
@@ -28,12 +49,13 @@ class Login extends React.Component {
             [key]:val
         })
     }
+
+
     render() {
         return (
             <div>
                 {this.props.redirectTo && this.props.redirectTo!='/login'?<Redirect to={this.props.redirectTo} />: null}
                 <Logo></Logo>
-                {/*<h2>登录页</h2>*/}
                 <WingBlank>
                     <List>
                         {this.props.msg?<p className="error-msg">{this.props.msg}</p>:null}

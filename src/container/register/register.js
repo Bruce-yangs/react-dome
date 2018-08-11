@@ -4,7 +4,6 @@ import {List, InputItem, WhiteSpace, WingBlank, Button, Radio} from 'antd-mobile
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
 import {register} from '@/user.redux'
-import 'css/index.css'
 
 class Register extends React.Component {
     constructor() {
