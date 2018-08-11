@@ -56,6 +56,7 @@ class Chat extends Component {
                     </List>
                     )
                 })}
+
                 <div className="stick-footer">
                     <List>
                         <InputItem
