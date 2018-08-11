@@ -30,7 +30,6 @@ io.on('connection',function (socket) {//此处的socket 是当前的请求
 
 
 
-
 app.use(bodyParser.json())//可以接受post参数
 app.use(cookieParser())
 app.use('/user',userRouter)

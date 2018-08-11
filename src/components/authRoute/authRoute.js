@@ -3,7 +3,6 @@ import axios from 'axios'
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {loadData} from '@/user.redux'
-
 class AuthRoute extends Component {
     componentDidMount() {
         const publicList = ['/login', '/register'];

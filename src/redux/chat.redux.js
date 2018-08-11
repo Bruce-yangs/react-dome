@@ -12,7 +12,6 @@ const initState = {
     chatMsg: [],
     unread: 0,
 }
-
 //reducer
 export function chat(state = initState, action) {
     switch (action.type) {

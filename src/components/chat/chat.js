@@ -43,7 +43,7 @@ class Chat extends Component {
         const user = this.props.match.params.user;
         const Item = List.Item;
         return (
-            <div id="chat-page">{/*{/*thumb={}*/}
+            <div id="chat-page">
                 <NavBar mode="dark">{user}</NavBar>
                 {this.props.chat.chatMsg.map(v => {
                     return v.from === user?(
@@ -56,7 +56,6 @@ class Chat extends Component {
                     </List>
                     )
                 })}
-
                 <div className="stick-footer">
                     <List>
                         <InputItem

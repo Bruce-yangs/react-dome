@@ -23,6 +23,7 @@ class BossInfo extends React.Component {
             [key]:val
         })
     }
+
     render() {
         const path = this.props.location.pathname;
         const redirect = this.props.redirectTo;

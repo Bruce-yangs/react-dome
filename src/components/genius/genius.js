@@ -13,5 +13,6 @@ class Genius extends Component {
         return <UserCard userList={this.props.userList}></UserCard>
     }
 }
+
 //编程式导航(withRouter用法)
 export default withRouter(connect(state=>state.chatuser,{getUserList})(Genius))

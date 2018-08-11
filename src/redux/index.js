@@ -34,7 +34,6 @@ function NotFound() {
     return <h1>404</h1>
 }
 
-
 /*Provider专门连接用 在最外层*/
  ReactDom.render(
      (<Provider store={store}>

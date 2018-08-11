@@ -9,7 +9,6 @@ class Boss extends Component {
     componentDidMount() {
         this.props.getUserList(1)
     }
-
     render() {
         return <UserCard userList={this.props.userList}></UserCard>
     }

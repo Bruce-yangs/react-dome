@@ -9,7 +9,6 @@ class NavLinkBar extends Component {
     static propTypes = {
         data: PropTypes.array.isRequired
     }
-
     constructor() {
         super();
         this.state = {}

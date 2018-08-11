@@ -21,7 +21,6 @@ class User extends Component {
             } },
         ]);
     }
-
     render() {
         const props = this.props;
         const Item = List.Item;

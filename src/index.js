@@ -21,7 +21,6 @@ import AuthRoute from 'com/authRoute/authRoute';
 import Dashboard from 'com/dashboard/dashboard';
 import Chat from 'com/chat/chat';
 import 'css/index.css'
-
 import {Button, List} from 'antd-mobile';
 
 

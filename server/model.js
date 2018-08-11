@@ -9,7 +9,6 @@ mongoose.connection.on('connected', function () {
     console.log('mongo connect success')
 });
 
-
 const models = {
     user: {
         'user': {'type': String, require: true},

@@ -70,7 +70,6 @@ Router.post('/login',(req,res)=> {
     //校验用户有没有cookie
     // return res.json({code:1})
 })
-
 //提交完善信息接口
 Router.post('/update',(req,res)=> {
     const userId = req.cookies.userId;

@@ -27,6 +27,7 @@ class Hello extends React.Component{
         return <h2>hellow imooc I lover react</h2>
     }
 }*/
+
 class Login extends React.Component {
     constructor() {
         super();

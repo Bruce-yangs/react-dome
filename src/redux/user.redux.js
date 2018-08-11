@@ -77,7 +77,6 @@ export function register({user, pwd, repeatpwd, type}) {
     }
 
 }
-
 //登录
 export function login({user, pwd}) {
     if (!user || !pwd) {

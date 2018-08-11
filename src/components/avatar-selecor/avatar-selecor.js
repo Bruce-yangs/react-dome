@@ -15,7 +15,6 @@ class AvatarSelecor extends Component {
         super();
         this.state = {}
     }
-
     render() {
         const avatarList = 'boy,girl,man,woman,bull,chick,crab,hedgehog,hippopotamus,koala,lemur,pig,tiger,whale,woman,zebra'
             .split(',')
