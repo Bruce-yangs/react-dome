@@ -5,7 +5,7 @@ const model = require('./model');//引入model
 const User = model.getModel('user');//要查询的字段 用户信息
 const Chat = model.getModel('chat');//要查询的字段 聊天记录
 const _filter = {'pwd':0,'__v':0};
-
+// Chat.remove({},function (e,d) {})
 //获取所有数据
 Router.get('/list',(req,res)=> {
     const {type} = req.query;
@@ -88,21 +88,47 @@ Router.post('/update',(req,res)=> {
 //获取聊天列表信息
 Router.get('/getMsgList',(req,res)=> {
     const userId = req.cookies.userId;
-    if(!userId) {
+    /*if(!userId) {
         return res.json({code:1})
-    }
-    const body = req.body;
+    }*/
+    User.find({},function (e,userDoc) {
+        let users = {};
+        userDoc.forEach(v=> {
+            //拿到用户的所有名称和头像
+            users[v._id] = {name:v.user,avatar:v.avatar}
+        })
+        //查询到聊天的id
+        Chat.find({'$or':[{from:userId},{to:userId}]},function(err,doc){
+            if(!err) {
+                return res.json({code:0,msgs:doc,users:users})
+            }
+        })
+    })
+
     /*{'$or':[{from:user,to:user}]}*/
-    Chat.find({},function(err,doc){
+
+})
+
+//获取读取信息
+Router.post('/readmsg',(req,res)=>{
+    const userId = req.cookies.userId;
+    const {from} = req.body;
+    /*此处更新 已读状态    {read:true} 严谨写法 {'$set':{read:true}}  multi 更新多个*/
+    Chat.update(
+        {from,to:userId},
+        {'$set':{read:true}},
+        {'multi':true},
+        (err,doc)=>{
+            //doc 返回值 是n代表几条数据 nModified 代表更新 几条数据
+        console.log(doc)
         if(!err) {
-            return res.json({code:0,msgs:doc})
+            return res.json({code:0,num:doc.nModified})
         }
-        /*const data = Object.assign({},{
-            user:doc.user,
-            type:doc.type
-        },body)*/
+        return res.json({code:1,msg:'修改已读数量失败'})
     })
 })
+
+
 //加密 加盐
 function md5Pwd(pwd) {
     const salt = 'jiamd5^@!$^*qwerz~';

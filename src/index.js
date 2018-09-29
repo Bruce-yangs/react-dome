@@ -7,8 +7,6 @@ import {
     BrowserRouter,
     Switch,
     Route,
-    Redirect,
-    Link, NavLink
 } from 'react-router-dom'
 
 import reducers from './reducer';
@@ -21,7 +19,6 @@ import AuthRoute from 'com/authRoute/authRoute';
 import Dashboard from 'com/dashboard/dashboard';
 import Chat from 'com/chat/chat';
 import 'css/index.css'
-import {Button, List} from 'antd-mobile';
 
 
 /*此处的reducers是公共要改变的数据*/

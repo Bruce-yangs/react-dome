@@ -20,6 +20,7 @@ class NavLinkBar extends Component {
             <TabBar>
                 {navList.map(v=>(
                     <TabBar.Item
+                        badge={v.path=='/msg'? this.props.unread:''}
                         title={v.text}
                         key={v.path}
                         icon={{uri:require(`img/${v.icon}.png`)}}
@@ -37,4 +38,4 @@ class NavLinkBar extends Component {
     }
 }
 //编程式导航(withRouter用法)
-export default withRouter(connect(null/*,{loadData}*/)(NavLinkBar))
+export default withRouter(connect(state=>state.chat/*,{loadData}*/)(NavLinkBar))

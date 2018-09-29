@@ -4,6 +4,7 @@ import NavLinkBar from 'com/navLinkBar/navLinkBar';
 import Boss from 'com/boss/boss';
 import Genius from 'com/genius/genius';
 import User from 'com/user/user';
+import Msg from 'com/msg/msg';
 import {
     BrowserRouter,
     Switch,
@@ -12,20 +13,26 @@ import {
     Link, NavLink
 } from 'react-router-dom'
 import {List, InputItem, WhiteSpace, WingBlank, Button, NavBar, TextareaItem} from 'antd-mobile'
+import {getMsgList, recvMsg} from '@/chat.redux'
 
 /*function Boss() {
     return <h2>Boss</h2>
 }*/
 /*function Genius() {
     return <h2>Genius</h2>
-}*/
+}
 function Msg() {
     return <h2>Msg12321</h2>
 }
-
+*/
 
 class Dashboard extends React.Component {
-
+    componentDidMount() {
+        if(!this.props.chat.chatMsg.length) {
+            this.props.getMsgList();
+            this.props.recvMsg();
+        }
+    }
 
     render() {
         const path = this.props.location.pathname;
@@ -81,4 +88,4 @@ class Dashboard extends React.Component {
     }
 }
 
-export default connect(state => state/*, {update}*/)(Dashboard)
+export default connect(state => state, {getMsgList, recvMsg})(Dashboard)

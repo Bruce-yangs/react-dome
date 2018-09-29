@@ -7,9 +7,7 @@ import { Result, List, WhiteSpace, Modal } from 'antd-mobile';
 import browserCookie from 'browser-cookies'
 
 class User extends Component {
-    constructor(){
-        super();
-    }
+
     loginOut() {
         const alert = Modal.alert;
         alert('退出', '确定退出吗?', [

@@ -11,38 +11,70 @@ const MSG_READ = 'MSG_READ';
 const initState = {
     chatMsg: [],
     unread: 0,
+    users: {}
 }
 //reducer
 export function chat(state = initState, action) {
     switch (action.type) {
         case MSG_LIST:
-            return {...state, chatMsg: action.payload, unread: action.payload.filter(v => !v.read).length}
-        case MSG_RECV:
             return {
                 ...state,
-                chatMsg: [...state.chatMsg, action.payload],unread:state.unread+1/*,unread:action.payload.filter(v=>!v.read).length*/
+                users: action.payload.users,
+                chatMsg: action.payload.data,
+                unread: action.payload.data.filter(v => !v.read && v.to === action.payload.userId).length
             }
-        /*   case MSG_READ:
-         return {...state, chatMsg: action.payload}*/
+        case MSG_RECV:
+            const n = action.payload.to == action.userId ? 1 : 0;
+            console.log(action.payload)
+            console.log(action.userId)
+            return {
+                ...state,
+                chatMsg: [...state.chatMsg, action.payload],
+                unread: state.unread + n/*,unread:action.payload.filter(v=>!v.read).length*/
+            }
+           case MSG_READ:
+               const {from,num} = action.payload;
+         return {...state, chatMsg: state.chatMsg.map(v=>({...v,read:from===v.from?true:v.read})),unread:state.unread - num}
         default:
             return state
     }
 }
 
 
-export function msgList(data) {
-    return {type: MSG_LIST, payload: data}
+ function msgList(data, users, userId) {
+    return {type: MSG_LIST, payload: {data, users, userId}}
 }
-export function msgRecv(data) {
-    return {type: MSG_RECV, payload: data}
+ function msgRecv(data, userId) {
+    return {userId, type: MSG_RECV, payload: data}
+}
+//num 是改变了几个阅读状态
+ function msgRead({from,userId,num}) {
+    return { type: MSG_READ, payload: {from,userId,num}}
+}
+
+
+//是否已读
+export function readMsg(from) {
+    return (dispatch, getState) => {
+        axios.post('/user/readmsg', {from})
+            .then(res => {
+                const userId = getState().user._id;
+                if (res.status == 200 && res.data.code == 0) {
+                    let num = res.data.num;
+                    dispatch(msgRead({from,userId,num}))
+                }
+
+            })
+    }
 }
 
 //监听 服务端返回值
 export function recvMsg() {
-    return dispatch => {
+    return (dispatch, getState) => {
         socket.on('recvMsg', function (data) {
-            console.log('recvMsg', data)
-            dispatch(msgRecv(data))
+            const userId = getState().user._id;
+
+            dispatch(msgRecv(data, userId))
         })
     }
 }
@@ -53,13 +85,13 @@ export function sendMsg({from, to, msg}) {
     }
 }
 export function getMsgList(type) {
-    return dispatch => {
+    return (dispatch, getState) => {
         //获取用户信息
-        axios.get('/user/getMsgList')/*?type=' + type*/
+        axios.get('/user/getMsgList')
             .then(res => {
-                console.log(res.status)
                 if (res.status == 200 && res.data.code == 0) {
-                    dispatch(msgList(res.data.msgs))
+                    const userId = getState().user._id;
+                    dispatch(msgList(res.data.msgs, res.data.users, userId))
                 }
             })
     }
